@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Traka&reg;</title>
+
+<!--  LEAFLET.JS  -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+
+
+ <!--  BOOTSTRAP  --> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js" integrity="sha512-NWNl2ZLgVBoi6lTcMsHgCQyrZVFnSmcaa3zRv0L3aoGXshwoxkGs3esa9zwQHsChGRL4aLDnJjJJeP6MjPX46Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js" integrity="sha512-PqRelaJGXVuQ81N6wjUrRQelCDR7z8RvKGiR9SbSxKHPIt15eJDmIVv9EJgwq0XvgylszsjzvQ0+VyI2WtIshQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>--> 
+
+<!--  LEAFLET FULLSCREEN  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/2.3.0/Control.FullScreen.css" integrity="sha512-Wm5w05vDvZK7tOIICMiJMnvltfzTvmHFWmBhIQ4Wx4MutP9paMzZmEmH6DlxSuemaOhu8DcOE8TehdBhnz1mkQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/2.3.0/Control.FullScreen.js" integrity="sha512-T89wHCapRHFBnPRxzjMtXe421pHXhCIlBEedj6BmTviGc6VPly4xlj78Q1hiZ4u2JVDIbDzHDrWoqBi0vHHahQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!--  LEAFLET LOCATE  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.76.0/L.Control.Locate.css" integrity="sha512-tHOsa8kiuv4rDFZBA1N5a3WkEkWii7/PPVjQDQrOVx7UlvFO0bCILxkfjDT8eAjKD91QJ9jBTMiebey2ELOoDQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.76.0/L.Control.Locate.min.js" integrity="sha512-3mUIzmFDiuy7XdGjX5OfpjXnLK1XFBZ1S22ea0GYz14Q+OL5aHveYQxb12KLwD6mlwynNuXqee5SPvKRGJoNPg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!--  LEAFLET TOOLBAR  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.toolbar.js/0.3.0/leaflet.toolbar.css" integrity="sha512-2KtkH1u8DAmeURtFUD431hiR8kQIXSPCgnYbalfws3t9gvqUraWhjAKGxI/dS22xTgkouQ30/ot5HzLyD7EdJA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.toolbar.js/0.3.0/leaflet.toolbar.js" integrity="sha512-cW6lxYGEMUpgPLuzM2dechfHmUeIukolSWEkDFfU9fxdy+q5NJiSzt/3w26qLttkYLVhaymld/n1ubOAfQmJxA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!--  LEAFLET ZOOMBAR  -->
+<link rel="stylesheet" type="text/css" href="https://www.5hsh.uk/amethyst/plugins/zoombar/L.Control.ZoomBar.css"/>
+<script type="text/javascript" src="https://www.5hsh.uk/amethyst/plugins/zoombar/L.Control.ZoomBar.js"></script>
+
+<!-- Load Esri Leaflet from CDN -->
+<script src="https://unpkg.com/esri-leaflet"></script>
+
+<!-- Esri Leaflet Geocoder -->
+<link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css" />
+<script src="https://unpkg.com/esri-leaflet-geocoder"></script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<style>
+    body {
+    margin: 0;
+    padding: 0;
+        }
+image {
+    border-radius: 50%;    
+}
+#content {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  #content td,
+  #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  #content tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  #content tr:hover {
+    background-color: #ddd;
+  }
+
+  #content th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4caf50;
+    color: white;
+  }
+#map {
+    width: 100%;
+    height: 100vh;
+    z-index:6669;
+        }
+        /*
+#gpsState {
+    margin: 10px;
+    padding: 10px;
+    position:absolute;
+    background:white;
+    top: 5px;
+    left: 135px;
+    z-index:9999;
+        }
+#btngpsState {
+    margin: 10px;
+    padding: 10px;
+    position:absolute;
+    background:white;
+    bottom: 55px;
+    left: 5px;
+    width:100px;
+    height:100px;
+    z-index:9999;
+        }
+#gpsUser {
+    margin: 10px;
+    padding: 10px;
+    position:absolute;
+    background:white;
+    top: 5px;
+    left: 205px;
+    z-index:9999;
+        }
+#btngpsUser {
+    margin: 10px;
+    padding: 10px;
+    position:absolute;
+    background:white;
+    top: 5px;
+    left: 245px;
+    z-index:9999;
+        } 
+        */
+#gpsData {
+    margin: 10px;
+    padding: 10px;
+    position:absolute;
+    background:white;
+    bottom: 10px;
+    left: 5%;
+    width:90%;
+    z-index:7779;
+        }
+
+#toolPad{
+    width:400px;
+    border-radius:20px;
+    margin: 10px;
+    padding: 10px;
+    position:absolute;
+    background:white;
+    top: 2px;
+    right: 45px;
+    z-index:8889;   
+}
+@media print {
+    @page {
+    size: 210mm 280mm;
+    }
+}
+</style>
+</head>
+
+<body>
+<input type="hidden" style="width:50px;" id="gpsUser" value="<?php echo $gpsUserText;?>">
+<input type="text" id="gpsData" value="" readonly>
+
+<div id="map"></div>
+<!--   TOOLPAD    -->
+<div id="toolPad" class="col-4">
+<button id="btnTrackingState" class="btn btn-success" style="background:red;color:white;" onclick="trackingToggle('trackingState','btnTrackingState','Tracking On','Tracking Off')">Tracking Off</button>   
+<input type="hidden" style="width:50px;" id="trackingState" value="Tracking Off"> 
+<button id="btngpsState" class="btn btn-success" style="background:red;color:white;" onclick="gpsToggle('gpsState','btngpsState','GPS On','GPS Off','<?php echo $gpsUser;?>')">GPS Off</button>
+<input type="hidden" style="width:50px;" id="gpsState" value="GPS Off"> 
+
+<div id="currUsers" style="display:none;">
+<h5>Current Users</h5>
+<div class="table-responsive">
+<table class="table1 table" id="content">
+<thead>
+<tr>
+<th>Image</th>
+<th>Name</th>
+<th>Title</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="trackModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Amethyst Tracking</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+    <div class="mb-3">
+  <label for="eventName" class="form-label">Tracking Event Title</label>
+  <input type="text" class="form-control" id="eventName" placeholder="Title for Tracking Event">
+</div>
+<div class="mb-3">
+  <label for="eventNotes" class="form-label">Description (Optional)</label>
+  <textarea class="form-control" id="eventNotes" rows="3"></textarea>
+</div>
+<input type="text" class="form-control" id="eventUser" name="eventUser" value="">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" onclick="trakaEventAdd()" class="btn btn-primary">Start Tracking</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+
+
+<!-- leaflet js  
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>-->
+<script>
+var trackModal = document.getElementById('trackModal')
+trackModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  var recipient = button.getAttribute('data-bs-id')
+
+  // Update the modal's content.
+  var modalTitle = trackModal.querySelector('.modal-title')
+  var modalBodyInput = trackModal.querySelector('#eventUser')
+
+  modalTitle.textContent = 'New Tracking Event for User ID: ' + recipient
+  modalBodyInput.value = recipient
+})
+
+function trakaEventAdd(){
+var user = document.getElementById('eventUser').value;
+var eventName = document.getElementById('eventName').value;
+var eventNotes = document.getElementById('eventNotes').value;
+var Data = {user:user,eventName:eventName,eventNotes:eventNotes};  
+$.ajax({
+type: "POST",
+url: "https://www.5hsh.uk/amethyst/amAddress/trakaEvent_Add.php",
+data : Data,
+}).done(function(){
+    
+//Track();
+console.log("Track Added");
+}).fail(function
+(xhr, textStatus, errorThrown) {
+console.log("Error Requesting. Please Try Again Later.");
+});  
+
+
+
+}
+
+
+
+$(document).ready(function(){
+    $("#trackingStateDiv").click(function(){
+        var myButton = bootstrap.Button.getInstance($("#trackOff")[0]);
+        console.log(myButton);
+        // {_element: button#myButton.btn.btn-outline-primary.active}
+    });
+});
+
+$('#trackingStateDiv input').on("click", function() {
+  alert(this.id);
+});
+
+(async function() {
+try {
+let tableEle = document.getElementById("content");
+let response = await fetch("https://www.5hsh.uk/amethyst/amAddress/getTrackData_Table.php");
+let body = await response.json();
+let rows = "";
+for (const item of body) {
+rows += `<tr>
+<td width="15%"><img src="https://www.5hsh.uk/amethyst/google/photos/${item.photo}" width="50px"><br><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#trackModal" data-bs-id="${item.id}">Realtime Tracking</button></td>
+<td width="25%">${item.name}</td>
+<td width="35%">${item.title}</td>
+<td width="25%">
+<button type="button" id="trackOn_${item.id}" class="btn btn-success" onclick="toggleTrack(${item.id},'on')">Tracking On</button>
+<button type="button" id="trackOff_${item.id}" class="btn btn-danger" onclick="toggleTrack(${item.id},'off')">Tracking Off</button>
+<br>
+${item.trackState}
+</td>
+</tr>`;
+}
+tableEle.querySelector("tbody").innerHTML = rows;
+} catch (error) {
+console.log(error);
+}
+})();
+
+function toggleTrack(ID,state){
+ //   alert(id+' changed to '+state);
+
+var Data = {id:ID,trackState:state};  
+$.ajax({
+type: "POST",
+url: "https://www.5hsh.uk/amethyst/amAddress/trackState_Update.php",
+data : Data,
+}).done(function(){
+//Track();
+console.log("toggleTrack Updated");
+}).fail(function
+(xhr, textStatus, errorThrown) {
+console.log("Error Requesting. Please Try Again Later.");
+});  
+
+}
+
+function turnTrackOff(id){
+    alert(id);
+}
+
+
+var esriapiKey = "AAPK7291a18e2ae74e3580a6aa3ada035b89SpFQdzEh2-bLRVkpfgeuutOxhiIsS6Vdw_v6Wf-3TLLLw7rRHG2LN5wBZTIRoM_y";
+
+
+// Map initialization 
+var map = L.map('map', {center: [54.5489, -2.8989],zoomControl:false,zoom: 9,measureControl: true,attributionControl: true});
+
+//osm layer
+var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
+osm.addTo(map);
+
+
+var searchControl = L.esri.Geocoding.geosearch({providers: [L.esri.Geocoding.arcgisOnlineProvider({apikey: esriapiKey})]}).addTo(map);
+var results = L.layerGroup().addTo(map);
+searchControl.on("results", function (data) {results.clearLayers();
+for (var i = data.results.length - 1; i >= 0; i--) {results.addLayer(L.marker(data.results[i].latlng));}});
+
+var zoom_bar = new L.Control.ZoomBar({position: 'topright'}).addTo(map);
+
+L.control.locate({
+icon:"fa fa-map-marker",
+drawCircle:false,
+flyTo:true,
+returnToPrevBounds:true,
+showPopup:true,
+strings: {
+title: "Show My Location"
+}
+}).addTo(map);
+
+
+
+var trackintervalID;
+
+function TrackLocs(urlName){
+$.ajax({
+dataType: "json",
+url: urlName,
+success: function(data) {
+
+     
+  var LG =  L.geoJson(data, {
+            pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {
+            icon: L.icon({
+            iconUrl: 'https://www.5hsh.uk/amethyst/google/photos/'+feature.properties.photo,
+            iconSize: [30, 40],
+            iconAnchor: [12, 18],
+            popupAnchor: [0, -25]
+            }),
+            title: feature.properties.name,
+            riseOnHover: true
+            });
+            },
+            onEachFeature: onEachFeature
+        }).addTo(map);
+}
+}).error(function() {});
+
+
+//var txtOn="Realtime On";
+//var txtOff="Realtime Off";
+    //var btntxt="btnContact" + feature.properties.id;
+function onEachFeature(feature, layer) {   
+   layer.bindPopup('<img src="https://www.5hsh.uk/amethyst/images/avatars/495.png" width="25px"><br><b>'+ feature.properties.name + '</b><br>' + feature.properties.title + '<br><br><b>Last logged at : '+ feature.properties.gpsDateTime + '</b><br><br><button id="btnDirectTo" class="btn btn-success" onclick="trackDirTo('+ feature.properties.gpsLat + ','+ feature.properties.gpsLng + ')">Directions To</button><br><br><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Realtime Tracking</button><br><br><button id="btnEmail" class="btn btn-success" onclick="trackEmailTo()">Send Email to User</button>');
+}    
+}    
+/*
+function update_trackState(ID) {
+selectElement = document.querySelector('actions');
+output = selectElement.options[selectElement.selectedIndex].value;
+//document.querySelector('.output').textContent = output;    
+  alert(ID);    
+var e = document.getElementById("actions");
+var strState = e.options[e.selectedIndex].text;
+var Data = {id:ID,trackState:strState};  
+    
+    
+$.ajax({
+type: "POST",
+url: "trackState_Update.php",
+data : Data,
+}).done(function(){
+
+Track();
+console.log("Updated");
+}).fail(function
+(xhr, textStatus, errorThrown) {
+console.log("Error Requesting. Please Try Again Later.");
+});   
+}
+*/
+
+function Track(){
+    
+TrackLocs("https://www.5hsh.uk/amethyst/amAddress/getTrackData.php");
+}
+
+function Trackstart(){
+Track();
+//TrackLocs("getTrackData.php");
+trackintervalID = setInterval(Track, 10000);
+}
+
+function Trackstop(){
+window.location.reload();
+clearInterval(trackintervalID);
+}
+
+function trackingToggle(ID,Button,onTxt,offTxt){
+var element = document.getElementById('trackingState');
+var elementB = document.getElementById(Button);
+var elementC = document.getElementById('currUsers');
+
+if(elementB.innerText === offTxt){
+    element.value = "Tracking On";
+    elementB.innerText = onTxt;
+    elementB.style.background = "green";
+    elementC.style.display = "block";
+    Trackstart();
+}else{
+    element.value = "Tracking Off";
+    elementB.innerText = offTxt;
+    elementB.style.background = "red";
+    elementC.style.display = "none";
+    Trackstop();
+}
+}    
+
+
+var marker, circle, lat, long, accuracy, timestamp;
+var gpsUserText = document.getElementById('gpsUser').value;
+
+function getPosition(position) {
+    // console.log(position)
+var latitude = position.coords.latitude;
+var longitude = position.coords.longitude;
+var accuracy = position.coords.accuracy;
+var now = new Date();
+var offsetMs = now.getTimezoneOffset() * 60 * 1000;
+var dateLocal = new Date(now.getTime() - offsetMs);
+var timestamp = dateLocal.toISOString().slice(0, 19).replace("T", " ");
+document.getElementById('gpsData').value="Latitude : " + latitude + " Longitude : " + longitude + " Accuracy : " + accuracy + " Timestamp : " + timestamp;
+
+if (marker) {map.removeLayer(marker)}
+
+if (circle) {map.removeLayer(circle)}
+
+marker = L.marker([latitude, longitude])
+circle = L.circle([latitude, longitude], { radius: accuracy })
+
+var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+
+map.fitBounds(featureGroup.getBounds())
+
+var Data = {id:gpsUserText,gpsLat:latitude,gpsLng:longitude,gpsAcc:accuracy,gpsDateTime:timestamp};
+    
+$.ajax({
+type: "POST",
+url: "https://www.5hsh.uk/amethyst/amAddress/gpsLogUpdate.php",
+data : Data,
+}).done(function(){
+console.log("GPS Log Updated");
+}).fail(function(xhr, textStatus, errorThrown) {
+console.log("Error Requesting. Please Try Again Later.");
+}); 
+console.log("User: " + gpsUserText + " Coordinate is: Latitude: " + latitude + " Longitude: " + longitude + " Accuracy: " + accuracy + " metres at : " + timestamp + " hrs");
+}
+
+function getPositionRealtime(position) {
+    // console.log(position)
+var latitude = position.coords.latitude;
+var longitude = position.coords.longitude;
+var accuracy = position.coords.accuracy;
+var now = new Date();
+var offsetMs = now.getTimezoneOffset() * 60 * 1000;
+var dateLocal = new Date(now.getTime() - offsetMs);
+var timestamp = dateLocal.toISOString().slice(0, 19).replace("T", " ");
+document.getElementById('gpsData').value="Latitude : " + latitude + " Longitude : " + longitude + " Accuracy : " + accuracy + " Timestamp : " + timestamp;
+
+if (marker) {map.removeLayer(marker)}
+
+if (circle) {map.removeLayer(circle)}
+
+marker = L.marker([latitude, longitude])
+circle = L.circle([latitude, longitude], { radius: accuracy })
+
+var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+
+map.fitBounds(featureGroup.getBounds())
+
+var Data = {id:gpsUserText,gpsLat:latitude,gpsLng:longitude,gpsAcc:accuracy,gpsDateTime:timestamp};
+    
+$.ajax({
+type: "POST",
+url: "https://www.5hsh.uk/amethyst/amAddress/gpsLogUpdate.php",
+data : Data,
+}).done(function(){
+console.log("Realtime GPS Log Updated");
+}).fail(function(xhr, textStatus, errorThrown) {
+console.log("Error Requesting. Please Try Again Later.");
+}); 
+console.log("User: " + gpsUserText + " Coordinate is: Latitude: " + latitude + " Longitude: " + longitude + " Accuracy: " + accuracy + " metres at : " + timestamp + " hrs");
+}
+
+
+function realtimeTracking(position) {
+    // console.log(position)
+var latitude = position.coords.latitude;
+var longitude = position.coords.longitude;
+var accuracy = position.coords.accuracy;
+var now = new Date();
+var offsetMs = now.getTimezoneOffset() * 60 * 1000;
+var dateLocal = new Date(now.getTime() - offsetMs);
+var timestamp = dateLocal.toISOString().slice(0, 19).replace("T", " ");
+document.getElementById('gpsData').value="Latitude : " + latitude + " Longitude : " + longitude + " Accuracy : " + accuracy + " Timestamp : " + timestamp;
+
+if (marker) {map.removeLayer(marker)}
+
+if (circle) {map.removeLayer(circle)}
+
+marker = L.marker([latitude, longitude])
+circle = L.circle([latitude, longitude], { radius: accuracy })
+
+var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+
+map.fitBounds(featureGroup.getBounds())
+
+var Data = {user:gpsUserText,pointLat:latitude,pointLng:longitude,gpsAcc:accuracy,pointDateTime:timestamp};
+    
+$.ajax({
+type: "POST",
+url: "https://www.5hsh.uk/amethyst/amAddress/gpsLogUpdate.php",
+data : Data,
+}).done(function(){
+console.log("Realtime GPS Log Updated");
+}).fail(function(xhr, textStatus, errorThrown) {
+console.log("Error Requesting. Please Try Again Later.");
+}); 
+console.log("User: " + gpsUserText + " Coordinate is: Latitude: " + latitude + " Longitude: " + longitude + " Accuracy: " + accuracy + " metres at : " + timestamp + " hrs");
+}
+
+
+
+var intervalID;
+var intervalIDRealtime;
+
+function sayHello(){
+navigator.geolocation.getCurrentPosition(getPosition);
+}
+
+function GPSstart(){
+navigator.geolocation.getCurrentPosition(getPosition);
+intervalID = setInterval(sayHello, 60000);
+}
+
+function GPSstop(){
+clearInterval(intervalID);
+map.removeLayer(marker);
+map.removeLayer(circle);
+}
+
+function sayHelloRealtime(){
+navigator.geolocation.getCurrentPosition(getPositionRealtime);
+}
+
+function GPSstartRealtime(){
+navigator.geolocation.getCurrentPosition(getPositionRealtime);
+intervalIDRealtime = setInterval(sayHello, 2000);
+}
+
+function GPSstopRealtime(){
+clearInterval(intervalIDRealtime);
+map.removeLayer(marker);
+//map.removeLayer(circle);
+}
+
+function gpsToggle(ID,Button,onTxt,offTxt,user){
+var element = document.getElementById('gpsState');
+var elementB = document.getElementById(Button);
+if(elementB.innerText === offTxt){
+    element.value = "GPS On";
+    elementB.innerText = onTxt;
+    elementB.style.background = "green";
+    $.ajax({
+    type: "POST",
+    url: "https://www.5hsh.uk/amethyst/amAddress/gpsStatus_Update.php",
+    data : {id:user,gpsStatus:'on'},
+    }).done(function(){
+    console.log("GPS Status for "+user+" updated to ON");
+    }).fail(function
+    (xhr, textStatus, errorThrown) {
+    console.log("Error Requesting GPS Status . Please Try Again Later.");
+    });    
+    GPSstart();
+}else{
+    element.value = "GPS Off";
+    elementB.innerText = offTxt;
+    elementB.style.background = "red";
+    $.ajax({
+    type: "POST",
+    url: "https://www.5hsh.uk/amethyst/amAddress/gpsStatus_Update.php",
+    data : {id:user,gpsStatus:'off'},
+    }).done(function(){
+    console.log("GPS Status for "+user+" updated to OFF");
+    }).fail(function
+    (xhr, textStatus, errorThrown) {
+    console.log("GPS Status Error Requesting. Please Try Again Later.");
+    }); 
+    GPSstop();  
+}
+}
+
+function gpsToggleRealtime(ID,Button,onTxt,offTxt){
+var element = document.getElementById('gpsState');
+var elementB = document.getElementById(Button);
+if(elementB.innerText === offTxt){
+    element.value = "GPS On";
+    elementB.innerText = onTxt;
+    elementB.style.background = "green";
+    GPSstartRealtime();
+}else{
+    element.value = "GPS Off";
+    elementB.innerText = offTxt;
+    elementB.style.background = "red";
+    GPSstopRealtime();
+}
+}
+function trackEmailTo() {
+    alert("TODO - Send an email");
+}
+
+function trackDirTo(lati,lngi) {
+    alert("TODO - Get directions to their current location - " + lati + "," + lngi)
+}
+
+function trackContact(Button) {
+    /**/
+    var onTxt = "Realtime On";
+    var offTxt = "Realtime Off";
+//var element = document.getElementById(ID);
+var elementB = document.getElementById(Button);
+if(elementB.innerText === offTxt){
+//    element.value = "GPS On";
+alert("Turned On");
+    elementB.innerText = onTxt;
+    elementB.style.background = "green";
+    GPSstartRealtime();
+}else{
+//    element.value = "GPS Off";
+alert("Turned Off");
+    elementB.innerText = offTxt;
+    elementB.style.background = "red";
+    GPSstopRealtime();
+}    
+    alert("TODO - Make contact through internal messaging "+onTxt)
+}
+</script>
+
+
+</body>
+</html>
